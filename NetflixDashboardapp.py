@@ -8,7 +8,7 @@ from PIL import Image
 from io import BytesIO
 import pandas as pd
 
-file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
+file_id = "1RVz8O1tJhoXibLZqesfM7s_NXlEHTzRP"
 csv_url = f"https://drive.google.com/uc?id={file_id}"
 
 
