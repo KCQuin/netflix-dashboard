@@ -7,11 +7,10 @@ import pandas as pd
 
 
 file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
-csv_url = f"https://drive.google.com/file/d/1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS/view?usp=sharing={file_id}"
+csv_url = f"https://drive.google.com/file/d/1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS/view?usp=sharing"
 
 # Read the data
-df = pd.read_csv(csv_url)
-
+df = pd.read_csv (csv_url)
 
 
 # Page Settings
