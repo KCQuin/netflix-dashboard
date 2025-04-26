@@ -12,7 +12,6 @@ csv_url = f"https://drive.google.com/file/d/1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS/vi
 # Read the data
 df = pd.read_csv(csv_url)
 
-st.dataframe(df)
 
 
 # Page Settings
