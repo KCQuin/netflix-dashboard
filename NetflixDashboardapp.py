@@ -48,7 +48,7 @@ response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 
 # Display the image in Streamlit
-st.image(image, caption="Image from Google Drive", use_column_width=True)
+st.image(image, caption="Logo", width=200) 
 
 
 # Main Title
