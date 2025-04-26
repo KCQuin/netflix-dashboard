@@ -16,12 +16,12 @@ csv_url = f"https://drive.google.com/uc?id={file_id}"
 df = pd.read_csv(csv_url)
 
 # Page Settings
-st.set_page_config(page_title="Netflix Dashboard", page_icon="🎬", layout="wide")
+st.set_page_config(page_title="Netflix Dashboard", fontsize="500", layout="wide")
 st.markdown(
     """
     <style>
     body {
-        background-color: black;
+        background-color: PMS 1795 C;
         color: white;
     }
     h1 {
