@@ -1,3 +1,7 @@
+!pip install streamlit
+!pip install pyngrok
+!pip install streamlit-extras
+
 import streamlit as st
 import pandas as pd
 import numpy as np
