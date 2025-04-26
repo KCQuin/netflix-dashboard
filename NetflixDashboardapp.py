@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 
-file_id = '1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS'
-csv_url = f'https://drive.google.com/file/d/1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS/view?usp=sharing={file_id}'
+file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
+csv_url = f"https://drive.google.com/file/d/1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS/view?usp=sharing={file_id}"
 
 # Read the data
 df = pd.read_csv(csv_url)
@@ -35,10 +35,10 @@ st.markdown(
 
 # Netflix Logo
 # Your image file ID
-image_file_id = '1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X'
+image_file_id = "1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X"
 
 # Create a direct link
-image_url = f'https://drive.google.com/file/d/1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X/view?usp=sharing={image_file_id}'
+image_url = f"https://drive.google.com/file/d/1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X/view?usp=sharing={image_file_id}"
 
 # Show image in Streamlit
 st.image(image_url, width=200)
