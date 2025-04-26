@@ -28,6 +28,7 @@ st.markdown(
         color: #E50914;
         font-family: 'Trebuchet MS', sans-serif;
         text-align: center;
+        font-size: 150;
     }
     </style>
     """, unsafe_allow_html=True
@@ -103,7 +104,7 @@ ax3.grid(False)
 st.pyplot(fig3)
 
 # Section: Ratings Pie Chart
-st.subheader("🎬 Content Ratings")
+st.subheader("Content Ratings")
 n = df_filtered.groupby(['rating']).size().reset_index(name='counts')
 pieChart = px.pie(n, values='counts', names='rating',
                   title='Distribution of Content Ratings',
@@ -113,7 +114,7 @@ pieChart.update_layout(title_font=dict(size=24, color='white', family='Arial'),
 st.plotly_chart(pieChart)
 
 # Section: Top Genres Pie Charts
-st.subheader("🍿 Top Genres")
+st.subheader("Top Genres")
 col1, col2 = st.columns(2)
 
 with col1:
@@ -137,7 +138,7 @@ with col2:
     st.pyplot(fig5)
 
 # Section: Heatmap of Additions
-st.subheader("📈 Netflix Content Updates Heatmap")
+st.subheader("Netflix Content Updates Heatmap")
 netflix_date = df_filtered[['date_added']].dropna().copy()
 netflix_date['date_added'] = pd.to_datetime(netflix_date['date_added'], errors='coerce')
 netflix_date = netflix_date.dropna()
@@ -163,4 +164,4 @@ fig6.patch.set_facecolor('black')
 st.pyplot(fig6)
 
 # Footer
-st.caption('Made by Kristal Quintana')
+st.caption('Created by Kristal Quintana')
