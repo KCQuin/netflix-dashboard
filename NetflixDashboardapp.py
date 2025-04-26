@@ -1,10 +1,10 @@
-!pip install streamlit
-!pip install pyngrok
-!pip install streamlit-extras
+pip install streamlit
+pip install pyngrok
+pip install streamlit-extras
 
 # Mount Google Drive to access your dataset
 from google.colab import drive
-drive.mount('/content/drive')
+drive.mount('/content/drive/MyDrive')
 
 import streamlit as st
 import pandas as pd
