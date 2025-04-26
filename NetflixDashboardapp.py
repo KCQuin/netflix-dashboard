@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -7,12 +6,19 @@ import plotly.express as px
 import requests
 from PIL import Image
 from io import BytesIO
+import pandas as pd
 
-# ============ Page Settings ============
+file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
+csv_url = f"https://drive.google.com/uc?id={file_id}"
+
+
+# Read the data
+df = pd.read_csv(csv_url)
+
+# Page Settings
 st.set_page_config(page_title="Netflix Dashboard", page_icon="🎬", layout="wide")
-
-# ============ Custom CSS ============
-st.markdown("""
+st.markdown(
+    """
     <style>
     body {
         background-color: black;
@@ -24,38 +30,42 @@ st.markdown("""
         text-align: center;
     }
     </style>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True
+)
 
-# ============ Load Netflix Data ============
-file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
-csv_url = f"https://drive.google.com/uc?id={file_id}"
-df = pd.read_csv(csv_url)
+import requests
+from PIL import Image
+import streamlit as st
 
-# ============ Sidebar ============
-with st.sidebar:
-    # Load and display logo
-    logo_file_id = "1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X"
-    logo_url = f"https://drive.google.com/uc?export=download&id={logo_file_id}"
-    response = requests.get(logo_url)
-    logo = Image.open(BytesIO(response.content))
-    st.image(logo, width=250)
+# Your Drive file ID
+file_id = "1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X"
 
-    st.header("🔎 Filter Your Netflix Data")
-    type_filter = st.multiselect("Select Type", options=df['type'].unique(), default=df['type'].unique())
-    year_min = int(df['release_year'].min())
-    year_max = int(df['release_year'].max())
-    year_filter = st.slider('Select Release Year Range', min_value=year_min, max_value=year_max, value=(year_min, year_max))
+# Generate the direct download URL
+image_url = f"https://drive.google.com/uc?export=download&id={file_id}"
 
-# ============ Main Page ============
-st.markdown("<h1>Netflix Dashboard 🎬</h1>", unsafe_allow_html=True)
+# Download the image
+response = requests.get(image_url)
+image = Image.open(BytesIO(response.content))
 
-# ============ Filter Data ============
+# Display the image in Streamlit
+st.sidebar.image(image, width=300) 
+
+
+# Main Title
+st.markdown("<h1>Netflix Dashboard</h1>", unsafe_allow_html=True)
+
+# Sidebar
+st.sidebar.header("Filter Your Netflix Data")
+type_filter = st.sidebar.multiselect("Select Type", options=df['type'].unique(), default=df['type'].unique())
+year_min = int(df['release_year'].min())
+year_max = int(df['release_year'].max())
+year_filter = st.sidebar.slider('Select Release Year Range', min_value=year_min, max_value=year_max, value=(year_min, year_max))
+
+# Filter Data
 df_filtered = df[(df['type'].isin(type_filter)) & (df['release_year'].between(year_filter[0], year_filter[1]))]
 
-# ============ Visualizations ============
-
-# --- Release Year Distribution
-st.subheader("📅 Release Year Distribution")
+# Section: Release Year Distribution
+st.subheader("Release Year Distribution")
 fig1, ax1 = plt.subplots(figsize=(10,6))
 sns.histplot(df_filtered['release_year'], color="#E50914", kde=True, ax=ax1)
 ax1.set_title('Release Year Distribution', fontsize=20, fontweight='bold', color='white')
@@ -66,8 +76,8 @@ fig1.patch.set_facecolor('black')
 ax1.grid(False)
 st.pyplot(fig1)
 
-# --- Top 10 Countries
-st.subheader("🌍 Top 10 Countries with Most Netflix Titles")
+# Section: Top Countries
+st.subheader("Top 10 Countries with Most Netflix Titles")
 top_countries = df_filtered['country'].value_counts().head(10)
 fig2, ax2 = plt.subplots(figsize=(10,6))
 top_countries.plot(kind='barh', color="#B20710", ax=ax2)
@@ -80,7 +90,7 @@ fig2.patch.set_facecolor('black')
 ax2.grid(False)
 st.pyplot(fig2)
 
-# --- Movies vs TV Shows
+# Section: Movie vs TV Show Count
 st.subheader("🎥 Movies vs TV Shows")
 fig3, ax3 = plt.subplots(figsize=(8,6))
 sns.countplot(x='type', data=df_filtered, palette=["#E50914", "#B20710"], ax=ax3)
@@ -92,17 +102,17 @@ fig3.patch.set_facecolor('black')
 ax3.grid(False)
 st.pyplot(fig3)
 
-# --- Ratings Pie Chart
+# Section: Ratings Pie Chart
 st.subheader("🎬 Content Ratings")
-rating_counts = df_filtered.groupby('rating').size().reset_index(name='counts')
-pieChart = px.pie(rating_counts, values='counts', names='rating',
+n = df_filtered.groupby(['rating']).size().reset_index(name='counts')
+pieChart = px.pie(n, values='counts', names='rating',
                   title='Distribution of Content Ratings',
                   color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'])
 pieChart.update_layout(title_font=dict(size=24, color='white', family='Arial'),
                        paper_bgcolor='black', plot_bgcolor='black', font_color='white')
 st.plotly_chart(pieChart)
 
-# --- Top Genres Pie Charts
+# Section: Top Genres Pie Charts
 st.subheader("🍿 Top Genres")
 col1, col2 = st.columns(2)
 
@@ -126,7 +136,7 @@ with col2:
     fig5.patch.set_facecolor('black')
     st.pyplot(fig5)
 
-# --- Heatmap of Additions
+# Section: Heatmap of Additions
 st.subheader("📈 Netflix Content Updates Heatmap")
 netflix_date = df_filtered[['date_added']].dropna().copy()
 netflix_date['date_added'] = pd.to_datetime(netflix_date['date_added'], errors='coerce')
@@ -152,5 +162,5 @@ ax6.set_facecolor('black')
 fig6.patch.set_facecolor('black')
 st.pyplot(fig6)
 
-# ============ Footer ============
-st.caption('Made with ❤️ by [Your Name]')
+# Footer
+st.caption('Made by Kristal Quintana')
