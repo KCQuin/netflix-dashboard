@@ -41,8 +41,6 @@ image = Image.open(requests.get(image_url, stream=True).raw)
 st.image(image)
 
 
-# Show image in Streamlit
-st.image(image_url, width=200)
 
 # Main Title
 st.markdown("<h1>Netflix Dashboard 🎬</h1>", unsafe_allow_html=True)
