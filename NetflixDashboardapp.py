@@ -7,11 +7,9 @@ import pandas as pd
 
 
 file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
-csv_url = f"https://drive.google.com/file/d/1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS/view?usp=sharing"
+csv_url = f"https://drive.google.com/uc?id={file_id}"
 
-# Read the data
-df = pd.read_csv ('https://drive.google.com/file/d/1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS/view?usp=sharing')
-
+df = pd.read_csv(csv_url)
 
 # Page Settings
 st.set_page_config(page_title="Netflix Dashboard", page_icon="🎬", layout="wide")
@@ -32,11 +30,8 @@ st.markdown(
 )
 
 # Netflix Logo
-# Your image file ID
 image_file_id = "1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X"
-
-# Create a direct link
-image_url = f"https://drive.google.com/file/d/1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X/view?usp=sharing={image_file_id}"
+image_url = f"https://drive.google.com/uc?id={image_file_id}"
 
 # Show image in Streamlit
 st.image(image_url, width=200)
