@@ -5,6 +5,10 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 
+# Mount Google Drive to access your dataset
+from google.colab import drive
+drive.mount('/content/drive')
+
 # Replace with your actual file ID
 file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
 
