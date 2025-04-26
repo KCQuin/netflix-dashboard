@@ -5,10 +5,11 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import pandas as pd
 
-
 file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
 csv_url = f"https://drive.google.com/uc?id={file_id}"
 
+
+# Read the data
 df = pd.read_csv(csv_url)
 
 # Page Settings
