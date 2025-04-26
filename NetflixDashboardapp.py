@@ -48,14 +48,14 @@ response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 
 # Display the image in Streamlit
-st.image(image, width=300) 
+st.sidebar.image(image, width=300) 
 
 
 # Main Title
-st.markdown("<h1>Netflix Dashboard 🎬</h1>", unsafe_allow_html=True)
+st.markdown("<h1>Netflix Dashboard</h1>", unsafe_allow_html=True)
 
 # Sidebar
-st.sidebar.header("🔎 Filter Your Netflix Data")
+st.sidebar.header("Filter Your Netflix Data")
 type_filter = st.sidebar.multiselect("Select Type", options=df['type'].unique(), default=df['type'].unique())
 year_min = int(df['release_year'].min())
 year_max = int(df['release_year'].max())
@@ -65,7 +65,7 @@ year_filter = st.sidebar.slider('Select Release Year Range', min_value=year_min,
 df_filtered = df[(df['type'].isin(type_filter)) & (df['release_year'].between(year_filter[0], year_filter[1]))]
 
 # Section: Release Year Distribution
-st.subheader("📅 Release Year Distribution")
+st.subheader("Release Year Distribution")
 fig1, ax1 = plt.subplots(figsize=(10,6))
 sns.histplot(df_filtered['release_year'], color="#E50914", kde=True, ax=ax1)
 ax1.set_title('Release Year Distribution', fontsize=20, fontweight='bold', color='white')
@@ -77,7 +77,7 @@ ax1.grid(False)
 st.pyplot(fig1)
 
 # Section: Top Countries
-st.subheader("🌍 Top 10 Countries with Most Netflix Titles")
+st.subheader("Top 10 Countries with Most Netflix Titles")
 top_countries = df_filtered['country'].value_counts().head(10)
 fig2, ax2 = plt.subplots(figsize=(10,6))
 top_countries.plot(kind='barh', color="#B20710", ax=ax2)
@@ -163,4 +163,4 @@ fig6.patch.set_facecolor('black')
 st.pyplot(fig6)
 
 # Footer
-st.caption('Made with ❤️ by [Your Name]')
+st.caption('Made by Kristal Quintana')
