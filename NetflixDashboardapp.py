@@ -1,5 +1,5 @@
 # Mount Google Drive to access your dataset
-from google.colab import drive
+from google import drive
 drive.mount('/content/drive')
 
 import streamlit as st
