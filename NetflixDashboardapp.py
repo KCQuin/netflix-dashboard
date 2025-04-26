@@ -28,7 +28,6 @@ st.markdown(
         color: #E50914;
         font-family: 'Trebuchet MS', sans-serif;
         text-align: center;
-        font-size: 150px;
     }
     </style>
     """, unsafe_allow_html=True
@@ -92,7 +91,7 @@ ax2.grid(False)
 st.pyplot(fig2)
 
 # Section: Movie vs TV Show Count
-st.subheader("🎥 Movies vs TV Shows")
+st.subheader("Movies vs TV Shows")
 fig3, ax3 = plt.subplots(figsize=(8,6))
 sns.countplot(x='type', data=df_filtered, palette=["#E50914", "#B20710"], ax=ax3)
 ax3.set_title('Movies vs TV Shows', fontsize=20, fontweight='bold', color='white')
