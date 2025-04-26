@@ -3,6 +3,9 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
+import requests
+from PIL import Image
+from io import BytesIO
 import pandas as pd
 
 file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
@@ -34,12 +37,18 @@ import requests
 from PIL import Image
 import streamlit as st
 
-file_id = "1ABCdEfghijk12345XYZ"
-image_url = f"https://drive.google.com/uc?id={file_id}"
+# Your Drive file ID
+file_id = "1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X"
 
-image = Image.open(requests.get(image_url, stream=True).raw)
-st.image(image)
+# Generate the direct download URL
+image_url = f"https://drive.google.com/uc?export=download&id={file_id}"
 
+# Download the image
+response = requests.get(image_url)
+image = Image.open(BytesIO(response.content))
+
+# Display the image in Streamlit
+st.image(image, caption="Image from Google Drive", use_column_width=True)
 
 
 # Main Title
