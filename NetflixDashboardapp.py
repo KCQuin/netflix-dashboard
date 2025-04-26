@@ -1,9 +1,9 @@
 import streamlit as st
-import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
+import pandas as pd
 
 
 file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
