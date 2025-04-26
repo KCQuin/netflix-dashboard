@@ -30,9 +30,16 @@ st.markdown(
     """, unsafe_allow_html=True
 )
 
-# Netflix Logo
-image_file_id = "1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X"
-image_url = f"https://drive.google.com/uc?id={image_file_id}"
+import requests
+from PIL import Image
+import streamlit as st
+
+file_id = "1ABCdEfghijk12345XYZ"
+image_url = f"https://drive.google.com/uc?id={file_id}"
+
+image = Image.open(requests.get(image_url, stream=True).raw)
+st.image(image)
+
 
 # Show image in Streamlit
 st.image(image_url, width=200)
