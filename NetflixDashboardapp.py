@@ -25,7 +25,7 @@ st.markdown(
         color: white;
     }
     h1 {
-        color: white;
+        color: #E50914;
         font-family: 'Trebuchet MS', sans-serif;
         text-align: center;
     }
