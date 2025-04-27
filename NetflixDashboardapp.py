@@ -22,10 +22,10 @@ st.markdown(
     <style>
     body {
         background-color: black;
-        color: #E50914;
+        color: white;
     }
     h1 {
-        color: #E50914;
+        color: white;
         font-family: 'Trebuchet MS', sans-serif;
         text-align: center;
     }
