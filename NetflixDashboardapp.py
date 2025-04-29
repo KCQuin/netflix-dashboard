@@ -22,6 +22,7 @@ st.markdown(
     <style>
     body {
         background-color: black;
+        color: black;
        
     }
     h1 {
