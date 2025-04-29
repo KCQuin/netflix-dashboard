@@ -114,27 +114,66 @@ st.plotly_chart(pieChart)
 
 # Section: Top Genres Pie Charts
 st.subheader("Top Genres")
+
+# Netflix color palette
+colors = ["#E50914", "#B20710", '#404040', '#5a5a5a', '#737373', '#8c8c8c', '#a6a6a6', '#bfbfbf']
+
+# Function to wrap labels into two lines
+def wrap_label(label, max_words=2):
+    words = label.split()
+    if len(words) > max_words:
+        return ' '.join(words[:max_words]) + '\n' + ' '.join(words[max_words:])
+    return label
+
+# Check and get top genres (using 8 here as in your Streamlit version)
+if 'listed_in' in df_filtered.columns:
+    movie_genres = df_filtered[df_filtered['type'] == 'Movie']['listed_in'].value_counts().head(8)
+    tv_genres = df_filtered[df_filtered['type'] == 'TV Show']['listed_in'].value_counts().head(8)
+else:
+    raise KeyError("The 'listed_in' column is missing from the DataFrame.")
+
+# Wrap genre labels
+movie_labels_wrapped = [wrap_label(label) for label in movie_genres.index]
+tv_labels_wrapped = [wrap_label(label) for label in tv_genres.index]
+
+# Streamlit layout
 col1, col2 = st.columns(2)
 
 with col1:
-    movie_genres = df_filtered[df_filtered['type'] == 'Movie']['genre'].value_counts().head(8)
-    fig4, ax4 = plt.subplots()
-    ax4.pie(movie_genres, labels=movie_genres.index, autopct='%1.1f%%', startangle=140,
-            colors=["#E50914", "#B20710", '#404040', '#5a5a5a'],
-            textprops={'color':'white', 'fontsize':12})
-    ax4.set_title('Top 8 Genres - Movies', color='white', fontsize=16, fontweight='bold')
-    fig4.patch.set_facecolor('black')
-    st.pyplot(fig4)
+    fig1, ax1 = plt.subplots()
+    ax1.pie(
+        movie_genres,
+        labels=movie_labels_wrapped,
+        autopct='%1.1f%%',
+        startangle=140,
+        colors=colors,
+        textprops={'color': 'white', 'fontsize': 11},
+        labeldistance=1.1,
+        pctdistance=0.8,
+        wedgeprops={'edgecolor': 'black'}
+    )
+    ax1.set_title('Top 8 Genres - Movies', color='white', fontsize=16, fontweight='bold')
+    fig1.patch.set_facecolor('black')
+    ax1.set_facecolor('black')
+    st.pyplot(fig1)
 
 with col2:
-    tv_genres = df_filtered[df_filtered['type'] == 'TV Show']['genre'].value_counts().head(8)
-    fig5, ax5 = plt.subplots()
-    ax5.pie(tv_genres, labels=tv_genres.index, autopct='%1.1f%%', startangle=140,
-            colors=["#E50914", "#B20710", '#404040', '#5a5a5a'],
-            textprops={'color':'white', 'fontsize':12})
-    ax5.set_title('Top 8 Genres - TV Shows', color='white', fontsize=16, fontweight='bold')
-    fig5.patch.set_facecolor('black')
-    st.pyplot(fig5)
+    fig2, ax2 = plt.subplots()
+    ax2.pie(
+        tv_genres,
+        labels=tv_labels_wrapped,
+        autopct='%1.1f%%',
+        startangle=140,
+        colors=colors,
+        textprops={'color': 'white', 'fontsize': 11},
+        labeldistance=1.1,
+        pctdistance=0.8,
+        wedgeprops={'edgecolor': 'black'}
+    )
+    ax2.set_title('Top 8 Genres - TV Shows', color='white', fontsize=16, fontweight='bold')
+    fig2.patch.set_facecolor('black')
+    ax2.set_facecolor('black')
+    st.pyplot(fig2)
 
 # Section: Heatmap of Additions
 st.subheader("Netflix Content Updates Heatmap")
@@ -158,7 +197,7 @@ ax6.set_xticklabels(pivot_table.columns, fontsize=8, color='white', rotation=45)
 ax6.set_yticklabels(pivot_table.index, fontsize=8, color='white')
 ax6.set_title('Netflix Content Updates by Month and Year', fontsize=20, fontweight='bold', color='white')
 fig6.colorbar(c)
-ax6.set_facecolor('black')
+ax6.set_facecolor('white')
 fig6.patch.set_facecolor('black')
 st.pyplot(fig6)
 
