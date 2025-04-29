@@ -22,7 +22,7 @@ st.markdown(
     <style>
     body {
         background-color: black;
-        color: white;
+       
     }
     h1 {
         color: #E50914;
@@ -67,7 +67,7 @@ df_filtered = df[(df['type'].isin(type_filter)) & (df['release_year'].between(ye
 # Section: Release Year Distribution
 st.subheader("Release Year Distribution")
 fig1, ax1 = plt.subplots(figsize=(10,6))
-sns.histplot(df_filtered['release_year'], color="#E50914", kde=True, ax=ax1)
+sns.histplot(df_filtered['release_year'], color="#e50914", kde=True, ax=ax1)
 ax1.set_title('Release Year Distribution', fontsize=20, fontweight='bold', color='white')
 ax1.set_xlabel('Release Year', fontsize=16, color='white')
 ax1.set_ylabel('Density', fontsize=16, color='white')
