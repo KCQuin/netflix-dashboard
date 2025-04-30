@@ -100,17 +100,6 @@ with st.container():
         st.pyplot(fig)
 
 # Second row layout
-col1 = st.columns(1)
-    with col1:
-        st.subheader("Content Ratings")
-        rating_data = df_filtered.groupby('rating').size().reset_index(name='counts')
-        pie = px.pie(rating_data, values='counts', names='rating',
-                     color_discrete_sequence=px.colors.sequential.Reds)
-        pie.update_layout(paper_bgcolor=bg_color, plot_bgcolor=bg_color,
-                          font_color=text_color, title_font_color=text_color)
-        st.plotly_chart(pie, use_container_width=True)
-
-# Third row layout
 col1, col2 = st.columns(2)
 with col1:
     st.subheader("Release Year Distribution")
@@ -145,6 +134,15 @@ with col2:
         fig2.patch.set_facecolor(bg_color)
         ax2.set_facecolor(bg_color)
         st.pyplot(fig2)
+        
+# Content Ratings Section
+        st.subheader("Content Ratings")
+        rating_data = df_filtered.groupby('rating').size().reset_index(name='counts')
+        pie = px.pie(rating_data, values='counts', names='rating',
+                     color_discrete_sequence=px.colors.sequential.Reds)
+        pie.update_layout(paper_bgcolor=bg_color, plot_bgcolor=bg_color,
+                          font_color=text_color, title_font_color=text_color)
+        st.plotly_chart(pie, use_container_width=True)
 
 # Heatmap Section
 st.subheader("Content Additions Heatmap")
