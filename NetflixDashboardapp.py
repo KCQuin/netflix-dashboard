@@ -115,42 +115,20 @@ with col2:
         movie_genres = df_filtered[df_filtered['type'] == 'Movie']['listed_in'].value_counts().head(5)
         tv_genres = df_filtered[df_filtered['type'] == 'TV Show']['listed_in'].value_counts().head(5)
 
-        # Netflix red palette
-        colors = ['#E50914', '#B20710', '#FF0A16', '#A80000', '#FF4C4C']
-        bg_color = '#000000'
-        text_color = '#FFFFFF'
-
-        # --- Movie Genres Pie Chart ---
-        fig1, ax1 = plt.subplots(figsize=(5, 5), facecolor=bg_color)
-        wedges1, texts1, autotexts1 = ax1.pie(
-            movie_genres,
-            labels=movie_genres.index,
-            autopct='%1.1f%%',
-            startangle=140,
-            colors=colors
-        )
-        for text in texts1 + autotexts1:
-            text.set_color(text_color)
-        ax1.set_title('Top 5 Movie Genres', color=text_color)
+        fig1, ax1 = plt.subplots()
+        ax1.pie(movie_genres, labels=movie_genres.index, autopct='%1.1f%%', startangle=140,
+                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color})
+        fig1.patch.set_facecolor(bg_color)
         ax1.set_facecolor(bg_color)
         st.pyplot(fig1)
 
-        # --- TV Genres Pie Chart ---
-        fig2, ax2 = plt.subplots(figsize=(5, 5), facecolor=bg_color)
-        wedges2, texts2, autotexts2 = ax2.pie(
-            tv_genres,
-            labels=tv_genres.index,
-            autopct='%1.1f%%',
-            startangle=140,
-            colors=colors
-        )
-        for text in texts2 + autotexts2:
-            text.set_color(text_color)
-        ax2.set_title('Top 5 TV Show Genres', color=text_color)
+        fig2, ax2 = plt.subplots()
+        ax2.pie(tv_genres, labels=tv_genres.index, autopct='%1.1f%%', startangle=140,
+                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color})
+        fig2.patch.set_facecolor(bg_color)
         ax2.set_facecolor(bg_color)
         st.pyplot(fig2)
-
-
+     
 # Content Ratings Section
 st.subheader("Content Ratings")
 n = df_filtered.groupby(['rating']).size().reset_index(name='counts')
