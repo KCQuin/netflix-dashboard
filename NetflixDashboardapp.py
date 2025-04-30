@@ -48,17 +48,13 @@ image = Image.open(BytesIO(response.content))
 st.sidebar.image(image, width=300) 
 
 
-# Main Title
 st.markdown("<h1>Netflix Dashboard</h1>", unsafe_allow_html=True)
-
-# Sidebar
 st.sidebar.header("Filter Your Netflix Data")
 type_filter = st.sidebar.multiselect("Select Type", options=df['type'].unique(), default=df['type'].unique())
 year_min = int(df['release_year'].min())
 year_max = int(df['release_year'].max())
 year_filter = st.sidebar.slider('Select Release Year Range', min_value=year_min, max_value=year_max, value=(year_min, year_max))
 
-# Filter Data
 df_filtered = df[(df['type'].isin(type_filter)) & (df['release_year'].between(year_filter[0], year_filter[1]))]
 
 # Section: Release Year Distribution
