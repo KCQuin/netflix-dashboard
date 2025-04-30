@@ -17,9 +17,7 @@ df = pd.read_csv(csv_url)
 st.set_page_config(page_title="Netflix Dashboard", page_icon="📺", layout="wide")
 st.markdown("""
     <style>
-    h1, h2, h3, .stTextInput label, .stSelectbox label, .stSlider label {
-        color: white;
-    }
+    h1, h2, h3, .stTextInput label, .stSelectbox label, .stSlider label { color: white; }
     .css-1d391kg { background-color: #000 !important; }
     .st-cg { background-color: #111 !important; border-radius: 10px; padding: 20px; }
     .css-ffhzg2 { background-color: #111 !important; }
@@ -31,7 +29,7 @@ image_url = "https://drive.google.com/uc?export=download&id=1lxjEicVIKey9iNfm5vF
 response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 st.sidebar.image(image, width=250)
-st.sidebar.header(" Filter Netflix Data")
+st.sidebar.header("📊 Filter Netflix Data")
 
 # Sidebar Filters
 type_filter = st.sidebar.multiselect("Select Type", df['type'].unique(), default=df['type'].unique())
