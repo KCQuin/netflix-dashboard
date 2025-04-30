@@ -143,7 +143,7 @@ pieChart = px.pie(n, values='counts', names='rating',
                   color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'])
 pieChart.update_layout(title_font=dict(size=24, color='white', family='Arial'),
                        paper_bgcolor='black', plot_bgcolor='black', font_color='white')
-st.plotly_chart(pieChart)
+st.plotly_chart(pieChart, width=200)
 
 # Heatmap Section
 st.subheader("Content Additions Heatmap")
