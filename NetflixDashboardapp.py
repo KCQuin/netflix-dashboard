@@ -7,7 +7,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 import pandas as pd
-
+ 
 # Load Data
 file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
 csv_url = f"https://drive.google.com/uc?id={file_id}"
