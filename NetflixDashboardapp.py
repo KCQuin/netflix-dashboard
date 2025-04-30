@@ -137,12 +137,13 @@ with col2:
         
 # Content Ratings Section
         st.subheader("Content Ratings")
-        n = df_filtered.groupby('rating').size().reset_index(name='counts')
-        pieChart = px.pie(rating_data, values='counts', names='rating',
-                     color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'])
-        pie.update_layout(paper_bgcolor=bg_color, plot_bgcolor=bg_color,
-                          font_color=text_color, title_font_color=text_color)
-        st.plotly_chart(pie, width= 250)
+n = df_filtered.groupby(['rating']).size().reset_index(name='counts')
+pieChart = px.pie(n, values='counts', names='rating',
+                  title='Distribution of Content Ratings',
+                  color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'])
+pieChart.update_layout(title_font=dict(size=24, color='white', family='Arial'),
+                       paper_bgcolor='black', plot_bgcolor='black', font_color='white')
+st.plotly_chart(pieChart)
 
 # Heatmap Section
 st.subheader("Content Additions Heatmap")
