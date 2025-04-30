@@ -138,7 +138,7 @@ with col2:
 # Content Ratings Section
         st.subheader("Content Ratings")
         n = df_filtered.groupby('rating').size().reset_index(name='counts')
-        pie = px.pie(rating_data, values='counts', names='rating',
+        pieChart = px.pie(rating_data, values='counts', names='rating',
                      color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'])
         pie.update_layout(paper_bgcolor=bg_color, plot_bgcolor=bg_color,
                           font_color=text_color, title_font_color=text_color)
