@@ -76,7 +76,7 @@ with st.container():
     with col1:
         st.subheader("Movies vs TV Shows")
         fig, ax = plt.subplots()
-        sns.countplot(x='type', data=df_filtered, color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'], ax=ax)
+        sns.countplot(x='type', data=df_filtered, palette=palette, ax=ax)
         ax.set_facecolor(bg_color)
         fig.patch.set_facecolor(bg_color)
         ax.set_xlabel('Type', color=text_color)
@@ -88,7 +88,7 @@ with st.container():
         st.subheader("Top Countries")
         top_countries = df_filtered['country'].value_counts().head(10)
         fig, ax = plt.subplots()
-        top_countries.plot(kind='barh', color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'], ax=ax)
+        top_countries.plot(kind='barh', color=palette[1], ax=ax)
         ax.set_facecolor(bg_color)
         fig.patch.set_facecolor(bg_color)
         ax.set_xlabel("Number of Titles", color=text_color)
