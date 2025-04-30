@@ -117,7 +117,7 @@ with col2:
 
         fig1, ax1 = plt.subplots()
         ax1.pie(movie_genres, labels=movie_genres.index, autopct='%1.1f%%', startangle=140,
-                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color})
+                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color},  color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'])
         fig1.patch.set_facecolor(bg_color)
         ax1.set_facecolor(bg_color)
         st.pyplot(fig1)
