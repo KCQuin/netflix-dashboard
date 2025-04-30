@@ -72,7 +72,7 @@ st.markdown(f"<h1 style='text-align:center; color:{text_color};'> Netflix Dashbo
 
 # Layout Starts
 with st.container():
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
 
     with col1:
         st.subheader("Movies vs TV Shows")
@@ -99,7 +99,9 @@ with st.container():
         ax.tick_params(colors=text_color)
         st.pyplot(fig)
 
-    with col3:
+# Second row layout
+col1 = st.columns(1)
+    with col1:
         st.subheader("Content Ratings")
         rating_data = df_filtered.groupby('rating').size().reset_index(name='counts')
         pie = px.pie(rating_data, values='counts', names='rating',
@@ -108,7 +110,7 @@ with st.container():
                           font_color=text_color, title_font_color=text_color)
         st.plotly_chart(pie, use_container_width=True)
 
-# Second row layout
+# Third row layout
 col1, col2 = st.columns(2)
 with col1:
     st.subheader("Release Year Distribution")
