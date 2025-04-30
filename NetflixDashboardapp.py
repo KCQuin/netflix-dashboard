@@ -115,25 +115,29 @@ with col2:
         movie_genres = df_filtered[df_filtered['type'] == 'Movie']['listed_in'].value_counts().head(5)
         tv_genres = df_filtered[df_filtered['type'] == 'TV Show']['listed_in'].value_counts().head(5)
 
+        # Netflix theme color palette
         netflix_colors = ["#E50914", "#B20710", "#F5F5F1", "#A0A0A0", "#404040"]
+        netflix_bg = "#000000"
+        netflix_text = "#FFFFFF"
 
         fig1, ax1 = plt.subplots()
         ax1.pie(movie_genres, labels=movie_genres.index, autopct='%1.1f%%', startangle=140,
-                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color},
+                textprops={'color': netflix_text}, wedgeprops={'edgecolor': netflix_bg},
                 colors=netflix_colors)
-        ax1.set_title('Top 5 Movie Genres', color=text_color)
-        fig1.patch.set_facecolor(bg_color)
-        ax1.set_facecolor(bg_color)
+        ax1.set_title('Top 5 Movie Genres', color=netflix_text)
+        fig1.patch.set_facecolor(netflix_bg)
+        ax1.set_facecolor(netflix_bg)
         st.pyplot(fig1)
 
         fig2, ax2 = plt.subplots()
         ax2.pie(tv_genres, labels=tv_genres.index, autopct='%1.1f%%', startangle=140,
-                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color},
+                textprops={'color': netflix_text}, wedgeprops={'edgecolor': netflix_bg},
                 colors=netflix_colors)
-        ax2.set_title('Top 5 TV Show Genres', color=text_color)
-        fig2.patch.set_facecolor(bg_color)
-        ax2.set_facecolor(bg_color)
+        ax2.set_title('Top 5 TV Show Genres', color=netflix_text)
+        fig2.patch.set_facecolor(netflix_bg)
+        ax2.set_facecolor(netflix_bg)
         st.pyplot(fig2)
+
 
 # Content Ratings Section
 st.subheader("Content Ratings")
