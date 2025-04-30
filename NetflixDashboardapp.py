@@ -29,7 +29,7 @@ image_url = "https://drive.google.com/uc?export=download&id=1lxjEicVIKey9iNfm5vF
 response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 st.sidebar.image(image, width=250)
-st.sidebar.header("📊 Filter Netflix Data")
+st.sidebar.header("Filter Netflix Data")
 
 # Sidebar Filters
 type_filter = st.sidebar.multiselect("Select Type", df['type'].unique(), default=df['type'].unique())
@@ -48,7 +48,7 @@ if country_filter:
     df_filtered = df_filtered[df_filtered['country'].isin(country_filter)]
 
 # Title
-st.markdown("<h1 style='text-align:center;'>🎬 Netflix Dashboard</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center;'> Netflix Dashboard</h1>", unsafe_allow_html=True)
 
 # Layout Starts
 with st.container():
@@ -125,7 +125,7 @@ with col2:
         st.pyplot(fig2)
 
 # Heatmap Section
-st.subheader("📅 Content Additions Heatmap")
+st.subheader("Content Additions Heatmap")
 netflix_date = df_filtered[['date_added']].dropna().copy()
 netflix_date['date_added'] = pd.to_datetime(netflix_date['date_added'], errors='coerce')
 netflix_date.dropna(inplace=True)
