@@ -116,7 +116,7 @@ st.subheader("Top Genres")
 colors = ["#E50914", "#B20710", '#404040', '#5a5a5a', '#737373', '#8c8c8c', '#a6a6a6', '#bfbfbf']
 
 # Function to wrap labels into two lines
-def wrap_label(label, max_words=2):
+def wrap_label(label, max_words=1):
     words = label.split()
     if len(words) > max_words:
         return ' '.join(words[:max_words]) + '\n' + ' '.join(words[max_words:])
@@ -147,8 +147,7 @@ with col1:
         textprops={'color': 'white', 'fontsize': 11},
         labeldistance=1.1,
         pctdistance=0.8,
-        wedgeprops={'edgecolor': 'black'}
-    )
+        wedgeprops={'edgecolor': 'black'})
     ax1.set_title('Top 5 Genres - Movies', color='white', fontsize=16, fontweight='bold')
     fig1.patch.set_facecolor('black')
     ax1.set_facecolor('black')
@@ -156,17 +155,7 @@ with col1:
 
 with col2:
     fig2, ax2 = plt.subplots()
-    ax2.pie(
-        tv_genres,
-        labels=tv_labels_wrapped,
-        autopct='%1.1f%%',
-        startangle=140,
-        colors=colors,
-        textprops={'color': 'white', 'fontsize': 11},
-        labeldistance=1.1,
-        pctdistance=0.8,
-        wedgeprops={'edgecolor': 'black'}
-    )
+    ax2.pie( tv_genres, labels=tv_labels_wrapped, autopct='%1.1f%%', startangle=140, colors=colors, textprops={'color': 'white', 'fontsize': 11}, labeldistance=1.1, pctdistance=0.8, wedgeprops={'edgecolor': 'black'})
     ax2.set_title('Top 5 Genres - TV Shows', color='white', fontsize=16, fontweight='bold')
     fig2.patch.set_facecolor('black')
     ax2.set_facecolor('black')
