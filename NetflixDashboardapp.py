@@ -22,7 +22,7 @@ st.markdown(
     <style>
     body {
         background-color: black;
-        color: white;
+        color: black;
        
     }
     h1 {
@@ -68,7 +68,7 @@ sns.histplot(df_filtered['release_year'], color="#e50914", kde=True, ax=ax1)
 ax1.set_title('Release Year Distribution', fontsize=20, fontweight='bold', color='white')
 ax1.set_xlabel('Release Year', fontsize=16, color='white')
 ax1.set_ylabel('Density', fontsize=16, color='white')
-ax1.set_facecolor('white')
+ax1.set_facecolor('black')
 fig1.patch.set_facecolor('black')
 ax1.grid(False)
 st.pyplot(fig1)
@@ -82,7 +82,7 @@ ax2.set_title('Top 10 Countries', fontsize=20, fontweight='bold', color='white')
 ax2.set_xlabel('Number of Titles', fontsize=16, color='white')
 ax2.set_ylabel('Country', fontsize=16, color='white')
 ax2.invert_yaxis()
-ax2.set_facecolor('white')
+ax2.set_facecolor('black')
 fig2.patch.set_facecolor('black')
 ax2.grid(False)
 st.pyplot(fig2)
@@ -94,7 +94,7 @@ sns.countplot(x='type', data=df_filtered, palette=["#E50914", "#B20710"], ax=ax3
 ax3.set_title('Movies vs TV Shows', fontsize=20, fontweight='bold', color='white')
 ax3.set_xlabel('Type', fontsize=16, color='white')
 ax3.set_ylabel('Count', fontsize=16, color='white')
-ax3.set_facecolor('white')
+ax3.set_facecolor('black')
 fig3.patch.set_facecolor('black')
 ax3.grid(False)
 st.pyplot(fig3)
