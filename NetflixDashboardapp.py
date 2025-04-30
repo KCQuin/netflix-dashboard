@@ -122,10 +122,10 @@ def wrap_label(label, max_words=2):
         return ' '.join(words[:max_words]) + '\n' + ' '.join(words[max_words:])
     return label
 
-# Check and get top genres (using 8 here as in your Streamlit version)
+# Check and get top genres (using 5 here as in your Streamlit version)
 if 'listed_in' in df_filtered.columns:
-    movie_genres = df_filtered[df_filtered['type'] == 'Movie']['listed_in'].value_counts().head(8)
-    tv_genres = df_filtered[df_filtered['type'] == 'TV Show']['listed_in'].value_counts().head(8)
+    movie_genres = df_filtered[df_filtered['type'] == 'Movie']['listed_in'].value_counts().head(5)
+    tv_genres = df_filtered[df_filtered['type'] == 'TV Show']['listed_in'].value_counts().head(5)
 else:
     raise KeyError("The 'listed_in' column is missing from the DataFrame.")
 
@@ -149,7 +149,7 @@ with col1:
         pctdistance=0.8,
         wedgeprops={'edgecolor': 'black'}
     )
-    ax1.set_title('Top 8 Genres - Movies', color='white', fontsize=16, fontweight='bold')
+    ax1.set_title('Top 5 Genres - Movies', color='white', fontsize=16, fontweight='bold')
     fig1.patch.set_facecolor('black')
     ax1.set_facecolor('black')
     st.pyplot(fig1)
@@ -167,7 +167,7 @@ with col2:
         pctdistance=0.8,
         wedgeprops={'edgecolor': 'black'}
     )
-    ax2.set_title('Top 8 Genres - TV Shows', color='white', fontsize=16, fontweight='bold')
+    ax2.set_title('Top 5 Genres - TV Shows', color='white', fontsize=16, fontweight='bold')
     fig2.patch.set_facecolor('black')
     ax2.set_facecolor('black')
     st.pyplot(fig2)
