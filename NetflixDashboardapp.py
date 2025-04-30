@@ -56,7 +56,6 @@ type_filter = st.sidebar.multiselect("Select Type", df['type'].unique(), default
 year_min = int(df['release_year'].min())
 year_max = int(df['release_year'].max())
 year_filter = st.sidebar.slider("Release Year", min_value=year_min, max_value=year_max, value=(year_min, year_max))
-
 genre_filter = st.sidebar.multiselect("Select Genre", df['listed_in'].dropna().unique(), default=None)
 country_filter = st.sidebar.multiselect("Select Country", df['country'].dropna().unique(), default=None)
 
@@ -80,7 +79,6 @@ with st.container():
         sns.countplot(x='type', data=df_filtered, palette=palette, ax=ax)
         ax.set_facecolor(bg_color)
         fig.patch.set_facecolor(bg_color)
-        ax.set_title('Movies vs TV Shows', color=text_color)
         ax.set_xlabel('Type', color=text_color)
         ax.set_ylabel('Count', color=text_color)
         ax.tick_params(colors=text_color)
@@ -93,7 +91,6 @@ with st.container():
         top_countries.plot(kind='barh', color=palette[1], ax=ax)
         ax.set_facecolor(bg_color)
         fig.patch.set_facecolor(bg_color)
-        ax.set_title("Top 10 Countries", color=text_color)
         ax.set_xlabel("Number of Titles", color=text_color)
         ax.set_ylabel("Country", color=text_color)
         ax.tick_params(colors=text_color)
@@ -107,7 +104,6 @@ with col1:
     sns.histplot(df_filtered['release_year'], kde=True, color=palette[0], ax=ax)
     ax.set_facecolor(bg_color)
     fig.patch.set_facecolor(bg_color)
-    ax.set_title("Release Year", color=text_color)
     ax.set_xlabel("Year", color=text_color)
     ax.set_ylabel("Count", color=text_color)
     ax.tick_params(colors=text_color)
@@ -122,7 +118,6 @@ with col2:
         fig1, ax1 = plt.subplots()
         ax1.pie(movie_genres, labels=movie_genres.index, autopct='%1.1f%%', startangle=140,
                 textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color})
-        ax1.set_title('Top 5 Movie Genres', color=text_color)
         fig1.patch.set_facecolor(bg_color)
         ax1.set_facecolor(bg_color)
         st.pyplot(fig1)
@@ -130,19 +125,16 @@ with col2:
         fig2, ax2 = plt.subplots()
         ax2.pie(tv_genres, labels=tv_genres.index, autopct='%1.1f%%', startangle=140,
                 textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color})
-        ax2.set_title('Top 5 TV Show Genres', color=text_color)
         fig2.patch.set_facecolor(bg_color)
         ax2.set_facecolor(bg_color)
         st.pyplot(fig2)
-        
+
 # Content Ratings Section
-        st.subheader("Content Ratings")
+st.subheader("Content Ratings")
 n = df_filtered.groupby(['rating']).size().reset_index(name='counts')
 pieChart = px.pie(n, values='counts', names='rating',
-                  title='Distribution of Content Ratings',
                   color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'])
-pieChart.update_layout(title_font=dict(size=24, color='white', family='Arial'),
-                       paper_bgcolor='black', plot_bgcolor='black', font_color='white')
+pieChart.update_layout(paper_bgcolor=bg_color, plot_bgcolor=bg_color, font_color=text_color)
 st.plotly_chart(pieChart, width=200)
 
 # Heatmap Section
@@ -166,7 +158,6 @@ ax.set_xticks(np.arange(0.5, len(pivot.columns), 1))
 ax.set_yticks(np.arange(0.5, len(pivot.index), 1))
 ax.set_xticklabels(pivot.columns, rotation=45, color=text_color, fontsize=8)
 ax.set_yticklabels(pivot.index, color=text_color, fontsize=8)
-ax.set_title('Monthly Netflix Additions', color=text_color)
 fig.colorbar(c)
 ax.set_facecolor(bg_color)
 fig.patch.set_facecolor(bg_color)
