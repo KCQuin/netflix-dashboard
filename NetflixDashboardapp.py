@@ -115,16 +115,22 @@ with col2:
         movie_genres = df_filtered[df_filtered['type'] == 'Movie']['listed_in'].value_counts().head(5)
         tv_genres = df_filtered[df_filtered['type'] == 'TV Show']['listed_in'].value_counts().head(5)
 
+        netflix_colors = ["#E50914", "#B20710", "#F5F5F1", "#A0A0A0", "#404040"]
+
         fig1, ax1 = plt.subplots()
         ax1.pie(movie_genres, labels=movie_genres.index, autopct='%1.1f%%', startangle=140,
-                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color})
+                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color},
+                colors=netflix_colors)
+        ax1.set_title('Top 5 Movie Genres', color=text_color)
         fig1.patch.set_facecolor(bg_color)
         ax1.set_facecolor(bg_color)
         st.pyplot(fig1)
 
         fig2, ax2 = plt.subplots()
         ax2.pie(tv_genres, labels=tv_genres.index, autopct='%1.1f%%', startangle=140,
-                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color})
+                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color},
+                colors=netflix_colors)
+        ax2.set_title('Top 5 TV Show Genres', color=text_color)
         fig2.patch.set_facecolor(bg_color)
         ax2.set_facecolor(bg_color)
         st.pyplot(fig2)
