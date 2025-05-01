@@ -7,7 +7,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 import pandas as pd
- 
+
 # Load Data
 file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
 csv_url = f"https://drive.google.com/uc?id={file_id}"
@@ -15,6 +15,14 @@ df = pd.read_csv(csv_url)
 
 # Page Configuration
 st.set_page_config(page_title="Netflix Dashboard", page_icon="📺", layout="wide")
+st.markdown("""
+    <style>
+    h1, h2, h3, .stTextInput label, .stSelectbox label, .stSlider label { color: white; }
+    .css-1d391kg { background-color: #000 !important; }
+    .st-cg { background-color: #111 !important; border-radius: 10px; padding: 20px; }
+    .css-ffhzg2 { background-color: #111 !important; }
+    </style>
+""", unsafe_allow_html=True)
 
 # Sidebar Logo
 image_url = "https://drive.google.com/uc?export=download&id=1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X"
@@ -23,39 +31,12 @@ image = Image.open(BytesIO(response.content))
 st.sidebar.image(image, width=250)
 st.sidebar.header("Filter Netflix Data")
 
-# Theme Toggle
-theme = st.sidebar.radio("Select Theme", ("Dark", "Light"))
-
-# CSS Styling based on theme
-if theme == "Dark":
-    st.markdown("""
-        <style>
-        h1, h2, h3, .stTextInput label, .stSelectbox label, .stSlider label { color: white; }
-        .css-1d391kg { background-color: #000 !important; }
-        .st-cg { background-color: #111 !important; border-radius: 10px; padding: 20px; }
-        .css-ffhzg2 { background-color: #111 !important; }
-        </style>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-        <style>
-        h1, h2, h3, .stTextInput label, .stSelectbox label, .stSlider label { color: black; }
-        .css-1d391kg { background-color: #fff !important; }
-        .st-cg { background-color: #f0f0f0 !important; border-radius: 10px; padding: 20px; }
-        .css-ffhzg2 { background-color: #f0f0f0 !important; }
-        </style>
-    """, unsafe_allow_html=True)
-
-# Colors
-bg_color = "black" if theme == "Dark" else "white"
-text_color = "white" if theme == "Dark" else "black"
-palette = ["#E50914", "#B20710"] if theme == "Dark" else ["#880000", "#FF9999"]
-
 # Sidebar Filters
 type_filter = st.sidebar.multiselect("Select Type", df['type'].unique(), default=df['type'].unique())
 year_min = int(df['release_year'].min())
 year_max = int(df['release_year'].max())
 year_filter = st.sidebar.slider("Release Year", min_value=year_min, max_value=year_max, value=(year_min, year_max))
+
 genre_filter = st.sidebar.multiselect("Select Genre", df['listed_in'].dropna().unique(), default=None)
 country_filter = st.sidebar.multiselect("Select Country", df['country'].dropna().unique(), default=None)
 
@@ -67,46 +48,58 @@ if country_filter:
     df_filtered = df_filtered[df_filtered['country'].isin(country_filter)]
 
 # Title
-st.markdown(f"<h1 style='text-align:center; color:{text_color};'> Netflix Dashboard</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center;'> Netflix Dashboard</h1>", unsafe_allow_html=True)
 
 # Layout Starts
 with st.container():
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         st.subheader("Movies vs TV Shows")
         fig, ax = plt.subplots()
-        sns.countplot(x='type', data=df_filtered, palette=palette, ax=ax)
-        ax.set_facecolor(bg_color)
-        fig.patch.set_facecolor(bg_color)
-        ax.set_xlabel('Type', color=text_color)
-        ax.set_ylabel('Count', color=text_color)
-        ax.tick_params(colors=text_color)
+        sns.countplot(x='type', data=df_filtered, palette=["#E50914", "#B20710"], ax=ax)
+        ax.set_facecolor("black")
+        fig.patch.set_facecolor('black')
+        ax.set_title('Movies vs TV Shows', color='white')
+        ax.set_xlabel('Type', color='white')
+        ax.set_ylabel('Count', color='white')
+        ax.tick_params(colors='white')
         st.pyplot(fig)
 
     with col2:
         st.subheader("Top Countries")
         top_countries = df_filtered['country'].value_counts().head(10)
         fig, ax = plt.subplots()
-        top_countries.plot(kind='barh', color=palette[1], ax=ax)
-        ax.set_facecolor(bg_color)
-        fig.patch.set_facecolor(bg_color)
-        ax.set_xlabel("Number of Titles", color=text_color)
-        ax.set_ylabel("Country", color=text_color)
-        ax.tick_params(colors=text_color)
+        top_countries.plot(kind='barh', color="#B20710", ax=ax)
+        ax.set_facecolor("black")
+        fig.patch.set_facecolor('black')
+        ax.set_title("Top 10 Countries", color='white')
+        ax.set_xlabel("Number of Titles", color='white')
+        ax.set_ylabel("Country", color='white')
+        ax.tick_params(colors='white')
         st.pyplot(fig)
+
+    with col3:
+        st.subheader("Content Ratings")
+        rating_data = df_filtered.groupby('rating').size().reset_index(name='counts')
+        pie = px.pie(rating_data, values='counts', names='rating',
+                     color_discrete_sequence=px.colors.sequential.Reds)
+        pie.update_layout(paper_bgcolor='black', plot_bgcolor='black',
+                          font_color='white', title_font_color='white')
+        st.plotly_chart(pie, use_container_width=True)
 
 # Second row layout
 col1, col2 = st.columns(2)
 with col1:
     st.subheader("Release Year Distribution")
     fig, ax = plt.subplots()
-    sns.histplot(df_filtered['release_year'], kde=True, color=palette[0], ax=ax)
-    ax.set_facecolor(bg_color)
-    fig.patch.set_facecolor(bg_color)
-    ax.set_xlabel("Year", color=text_color)
-    ax.set_ylabel("Count", color=text_color)
-    ax.tick_params(colors=text_color)
+    sns.histplot(df_filtered['release_year'], kde=True, color="#E50914", ax=ax)
+    ax.set_facecolor("black")
+    fig.patch.set_facecolor('black')
+    ax.set_title("Release Year", color='white')
+    ax.set_xlabel("Year", color='white')
+    ax.set_ylabel("Count", color='white')
+    ax.tick_params(colors='white')
     st.pyplot(fig)
 
 with col2:
@@ -117,28 +110,22 @@ with col2:
 
         fig1, ax1 = plt.subplots()
         ax1.pie(movie_genres, labels=movie_genres.index, autopct='%1.1f%%', startangle=140,
-                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color}, color=palette[0] )
-        fig1.patch.set_facecolor(bg_color)
-        ax1.set_facecolor(bg_color)
+                textprops={'color': 'white'}, wedgeprops={'edgecolor': 'black'})
+        ax1.set_title('Top 5 Movie Genres', color='white')
+        fig1.patch.set_facecolor('black')
+        ax1.set_facecolor('black')
         st.pyplot(fig1)
 
         fig2, ax2 = plt.subplots()
         ax2.pie(tv_genres, labels=tv_genres.index, autopct='%1.1f%%', startangle=140,
-                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color}, color=palette[0])
-        fig2.patch.set_facecolor(bg_color)
-        ax2.set_facecolor(bg_color)
+                textprops={'color': 'white'}, wedgeprops={'edgecolor': 'black'})
+        ax2.set_title('Top 5 TV Show Genres', color='white')
+        fig2.patch.set_facecolor('black')
+        ax2.set_facecolor('black')
         st.pyplot(fig2)
-     
-# Content Ratings Section
-st.subheader("Content Ratings")
-n = df_filtered.groupby(['rating']).size().reset_index(name='counts')
-pieChart = px.pie(n, values='counts', names='rating',
-                  color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'])
-pieChart.update_layout(paper_bgcolor=bg_color, plot_bgcolor=bg_color, font_color=text_color)
-st.plotly_chart(pieChart, width=200)
 
 # Heatmap Section
-st.subheader("Netflix Content Updates")
+st.subheader("Content Additions Heatmap")
 netflix_date = df_filtered[['date_added']].dropna().copy()
 netflix_date['date_added'] = pd.to_datetime(netflix_date['date_added'], errors='coerce')
 netflix_date.dropna(inplace=True)
@@ -156,11 +143,12 @@ fig, ax = plt.subplots(figsize=(12, 6))
 c = ax.pcolor(pivot, cmap='Reds', edgecolors='white', linewidths=2)
 ax.set_xticks(np.arange(0.5, len(pivot.columns), 1))
 ax.set_yticks(np.arange(0.5, len(pivot.index), 1))
-ax.set_xticklabels(pivot.columns, rotation=45, color=text_color, fontsize=8)
-ax.set_yticklabels(pivot.index, color=text_color, fontsize=8)
+ax.set_xticklabels(pivot.columns, rotation=45, color='white', fontsize=8)
+ax.set_yticklabels(pivot.index, color='white', fontsize=8)
+ax.set_title('Monthly Netflix Additions', color='white')
 fig.colorbar(c)
-ax.set_facecolor(bg_color)
-fig.patch.set_facecolor(bg_color)
+ax.set_facecolor('black')
+fig.patch.set_facecolor('black')
 st.pyplot(fig)
 
 # Footer
