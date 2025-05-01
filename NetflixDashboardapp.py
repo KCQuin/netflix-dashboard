@@ -7,15 +7,14 @@ import requests
 from PIL import Image
 from io import BytesIO
 import pandas as pd
-
+ 
 # Load Data
 file_id = "1DE2s_g8DkOxr_CneTu_Me1pW_qJE6ITS"
 csv_url = f"https://drive.google.com/uc?id={file_id}"
 df = pd.read_csv(csv_url)
-df.columns = df.columns.str.strip().str.lower()  # Clean column names
 
 # Page Configuration
-st.set_page_config(page_title="Netflix Dashboard", page_icon="\U0001F4FA", layout="wide")
+st.set_page_config(page_title="Netflix Dashboard", page_icon="📺", layout="wide")
 
 # Sidebar Logo
 image_url = "https://drive.google.com/uc?export=download&id=1lxjEicVIKey9iNfm5vF2kiqOtdZFan-X"
@@ -113,30 +112,30 @@ with col1:
 with col2:
     st.subheader("Top Genres")
     if 'listed_in' in df_filtered.columns:
-        movie_genres = df_filtered[df_filtered['type'] == 'movie']['listed_in'].value_counts().head(5)
-        tv_genres = df_filtered[df_filtered['type'] == 'tv show']['listed_in'].value_counts().head(5)
+        movie_genres = df_filtered[df_filtered['type'] == 'Movie']['listed_in'].value_counts().head(5)
+        tv_genres = df_filtered[df_filtered['type'] == 'TV Show']['listed_in'].value_counts().head(5)
 
         fig1, ax1 = plt.subplots()
         ax1.pie(movie_genres, labels=movie_genres.index, autopct='%1.1f%%', startangle=140,
-                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color}, colors=palette)
+                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color}, color=palette[0] )
         fig1.patch.set_facecolor(bg_color)
         ax1.set_facecolor(bg_color)
         st.pyplot(fig1)
 
         fig2, ax2 = plt.subplots()
         ax2.pie(tv_genres, labels=tv_genres.index, autopct='%1.1f%%', startangle=140,
-                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color}, colors=palette)
+                textprops={'color': text_color}, wedgeprops={'edgecolor': bg_color}, color=palette[0])
         fig2.patch.set_facecolor(bg_color)
         ax2.set_facecolor(bg_color)
         st.pyplot(fig2)
-
+     
 # Content Ratings Section
 st.subheader("Content Ratings")
 n = df_filtered.groupby(['rating']).size().reset_index(name='counts')
 pieChart = px.pie(n, values='counts', names='rating',
                   color_discrete_sequence=["#E50914", "#B20710", '#404040', '#5a5a5a'])
 pieChart.update_layout(paper_bgcolor=bg_color, plot_bgcolor=bg_color, font_color=text_color)
-st.plotly_chart(pieChart, use_container_width=True)
+st.plotly_chart(pieChart, width=200)
 
 # Heatmap Section
 st.subheader("Netflix Content Updates")
@@ -166,4 +165,4 @@ st.pyplot(fig)
 
 # Footer
 st.markdown("<hr>", unsafe_allow_html=True)
-st.caption("\u2728 Created by Kristal Quintana | Inspired by Netflix UI \u2728")
+st.caption("✨ Created by Kristal Quintana | Inspired by Netflix UI ✨")
